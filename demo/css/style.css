@@ -55,9 +55,14 @@ h1 {
 	border: 0;
 }
 
-.projects{
-	width: 90%;
-	margin: 0 auto;
+.projects {
+  width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+}
+.projects a {
+  display: block;
+  font-weight: 300;
 }
 
 @font-face {
