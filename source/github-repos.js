@@ -1,9 +1,9 @@
 /*
  *  Project: GitHub Repo Widget
  *  Description: A widget to display your Github Repositories.
- *  Author: Ricardo Tomasi
+ *  Author: Joel Self
  *  License: MIT
- *  Forked from github.com/zenorocha/jquery-github-repos
+ *  Forked from github.com/ricardobeat/github-repos which was forked from github.com/zenorocha/jquery-github-repos
  */
 
 ;(function(){
