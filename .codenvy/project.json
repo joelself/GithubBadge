@@ -1,0 +1,1 @@
+{"builders":{"configs":{}},"mixinTypes":["contribution"],"runners":{"configs":{},"default":"system:/javascript/web/grunt"},"type":"GruntJS","attributes":{"framework":["BasicJS"],"contribute_branch":["master"],"contribute_mode":["contribute"],"language":["javascript"]},"description":"A JavaScript + HTML Widget to show-off your GitHub projects."}

@@ -12,6 +12,7 @@ module.exports = function(grunt) {
 				' *\n' +
 				' *  Copyright (c) <%= grunt.template.today("yyyy") %>\n' +
 				' *  MIT License\n' +
+        		' *  Forked from github.com/zenorocha/jquery-github-repos then github.com/ricardobeat/github-repos\n' +
 				' */\n'
 		},
 
@@ -28,7 +29,21 @@ module.exports = function(grunt) {
 				pushTo: 'origin'
 			}
 		},
-
+     
+		replace: {
+     		dist: {
+           'src/jquery.github.js': 'src/jquery.github.template.js'
+         },
+        	options : {
+           replacements : [
+             {
+               pattern: '{{template}}',
+               replacement: '<%= grunt.file.read("src/template.html") %>'
+             }
+           ]
+         }
+      },
+     
 		concat: {
 			options: {
 				banner: '<%= meta.banner %>'
@@ -93,8 +108,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-lintspaces');
+  	grunt.loadNpmTasks('grunt-string-replace');
 
-	grunt.registerTask('default', ['lintspaces', 'jshint', 'concat', 'uglify']);
+	grunt.registerTask('default', ['lintspaces', 'jshint', 'replace' 'concat', 'uglify']);
 	grunt.registerTask('release', ['bump-only:patch', 'default', 'bump-commit']);
 	grunt.registerTask('test', ['lintspaces', 'jshint', 'jasmine']);
 

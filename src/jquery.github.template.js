@@ -1,10 +1,3 @@
-/*
- *  Project: GitHub Repo Widget
- *  Description: A widget to display your Github Repositories.
- *  Author: Joel Self
- *  License: MIT
- *  Forked from github.com/zenorocha/jquery-github-repos then github.com/ricardobeat/github-repos
- */
 // -- Github Repository --------------------------------------------------------
 
 function GithubRepo( repo ) {
