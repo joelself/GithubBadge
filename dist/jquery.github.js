@@ -1,48 +1,32 @@
 /*
- *  jquery-github - v0.4.0
- *  A jQuery plugin to display your Github Repositories.
- *  https://github.com/zenorocha/jquery-github
+ *	 jquery-github - v0.4.0
+ *	 A jQuery plugin to display your Github Repositories.
+ *	 https://github.com/zenorocha/jquery-github
  *
- *  Copyright (c) 2014
- *  MIT License
+ *	 Copyright (c) 2015
+ *	 MIT License
+ *	 Forked from github.com/zenorocha/jquery-github-repos then github.com/ricardobeat/github-repos
  */
 // -- Github Repository --------------------------------------------------------
 
 function GithubRepo( repo ) {
 	this.description = repo.description;
-	this.forks = repo.forks_count;
+	this.forks_count = repo.forks_count;
 	this.name = repo.name;
 	this.open_issues = repo.open_issues;
 	this.pushed_at = repo.pushed_at;
-	this.url = repo.url;
-	this.stargazers = repo.stargazers_count;
+	this.html_url = repo.html_url;
+	this.stargazers_count = repo.stargazers_count;
+	this.watchers_count = repo.watchers_count;
 }
 
 // Parses HTML template
 GithubRepo.prototype.toHTML = function () {
-	this.pushed_at = this._parsePushedDate( this.pushed_at ),
-	this.url  = this._parseURL( this.url );
-
-	return $(
-		"<div class='github-box'>" +
-			"<div class='github-box-header'>" +
-				"<h3>" +
-					"<a href='" + this.url + "'>" + this.name + "</a>" +
-				"</h3>" +
-				"<div class='github-stats'>" +
-					"<a class='repo-stars' title='Stars' data-icon='7' href='" + this.url + "/stargazers'>" + this.stargazers + "</a>" +
-					"<a class='repo-forks' title='Forks' data-icon='f' href='" + this.url + "/network'>" + this.forks + "</a>" +
-					"<a class='repo-issues' title='Issues' data-icon='i' href='" + this.url + "/issues'>" + this.open_issues + "</a>" +
-				"</div>" +
-			"</div>" +
-			"<div class='github-box-content'>" +
-				"<p>" + this.description + " &mdash; <a href='" + this.url + "#readme'>Read More</a></p>" +
-			"</div>" +
-			"<div class='github-box-download'>" +
-				"<p class='repo-update'>Latest commit to <strong>master</strong> on " + this.pushed_at + "</p>" +
-				"<a class='repo-download' title='Download as zip' data-icon='w' href='" + this.url + "/zipball/master'></a>" +
-			"</div>" +
-		"</div>");
+	var data = this, template = "<div class='github-box'>\n	<div class='github-box-header'>\n		<h3>\n			<a href='{{html_url}}'>{{name}}</a>\n		</h3>\n		<div class='github-stats'>\n			<a class='repo-stars' title='Stars' data-icon='&#61482' href='{{html_url}}/stargazers'>{{stargazers_count}}</a>\n			<a class='repo-watchers' title='Watchers' data-icon='&#61518' href='{{html_url}}/watchers'>{{watchers_count}}</a>\n			<a class='repo-forks' title='Forks' data-icon='&#61442' href='{{html_url}}/network'>{{forks_count}}</a>\n			<a class='repo-issues' title='Issues' data-icon='&#61478' href='{{html_url}}/issues'>{{open_issues}}</a>\n		</div>\n	</div>\n	<div class='github-box-content'>\n		<p>{{description}} &mdash; <a href='{{html_url}}#readme'>Read More</a></p>\n	</div>\n	<div class='github-box-download'>\n		<p class='repo-update'>Latest commit to <strong>master</strong> on {{pushed_at}}</p>\n		<a class='repo-download' title='Download as zip' data-icon='&#61660' href='{{html_url}}/zipball/master'></a>\n	</div>\n</div>\n";
+	this.pushed_at = this._parsePushedDate( this.pushed_at );
+	return $( template.replace(/\{\{(\w+)\}\}/g, function(m, key){
+		return data[key];
+	} ) );
 };
 
 // Parses pushed_at with date format
@@ -52,16 +36,12 @@ GithubRepo.prototype._parsePushedDate = function ( pushed_at ) {
 	return date.getDate() + "/" + ( date.getMonth() + 1 ) + "/" + date.getFullYear();
 };
 
-// Parses URL to be friendly
-GithubRepo.prototype._parseURL = function ( url ) {
-	return url.replace( "api.", "" ).replace( "repos/", "" );
-};
-
 // -- Github Plugin ------------------------------------------------------------
 
 function Github( element, options ) {
 	var defaults = {
-				iconStars:  true,
+				iconStars:  false,
+				iconWatchers:  true,
 				iconForks:  true,
 				iconIssues: false
 			};
@@ -75,7 +55,6 @@ function Github( element, options ) {
 	this._defaults = defaults;
 
 	this.init();
-	this.displayIcons();
 }
 
 // Initializer
@@ -94,10 +73,12 @@ Github.prototype.init = function () {
 Github.prototype.displayIcons = function () {
 	var options = this.options,
 			$iconStars = $( ".repo-stars" ),
+			$iconWatchers = $( ".repo-watchers" ),
 			$iconForks = $( ".repo-forks" ),
 			$iconIssues = $( ".repo-issues" );
 
 	$iconStars.css( "display", options.iconStars ? "inline-block" : "none" );
+	$iconStars.css( "display", options.iconWatchers ? "inline-block" : "none" );
 	$iconForks.css( "display", options.iconForks ? "inline-block" : "none" );
 	$iconIssues.css( "display", options.iconIssues ? "inline-block" : "none" );
 };
@@ -159,6 +140,8 @@ Github.prototype.applyTemplate = function ( repo ) {
 		$widget = githubRepo.toHTML();
 
 	$widget.appendTo( this.$container );
+
+	this.displayIcons();
 };
 
 // -- Attach plugin to jQuery's prototype --------------------------------------
