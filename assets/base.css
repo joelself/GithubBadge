@@ -88,6 +88,11 @@
 	border-right: 1px solid #ddd;
 }
 
+.github-box .github-box-header .github-stats .repo-watchers {
+	padding-left: 2px;
+	border-right: 1px solid #ddd;
+}
+
 /* Github Box Content */
 
 .github-box .github-box-content {

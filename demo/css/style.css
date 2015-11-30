@@ -56,12 +56,11 @@ h1 {
 }
 
 .projects {
-  width: 900px;
+  width: 500px;
   margin: 0 auto;
   padding: 30px;
 }
 .projects a {
-  display: block;
   font-weight: 300;
 }
 
