@@ -1,4 +1,4 @@
-describe("GithubBadge.repo", function() {
+describe("github-badge.repo", function() {
 
 	var instance;
 

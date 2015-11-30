@@ -18,10 +18,10 @@ module.exports = function(grunt) {
 
 		bump: {
 			options: {
-				files: ['bower.json', 'GitHubBadge.json'],
+				files: ['bower.json', 'github-badge.json'],
 				commit: true,
 				commitMessage: 'Release v%VERSION%',
-				commitFiles: ['bower.json', 'GitHubBadge.json', 'dist'],
+				commitFiles: ['bower.json', 'github-badge.json', 'dist'],
 				createTag: true,
 				tagName: '%VERSION%',
 				tagMessage: '',
@@ -37,7 +37,7 @@ module.exports = function(grunt) {
 		'string-replace': {
 			inline: {
 				files: {
-					'src/GitHubBadge.js': 'src/GitHubBadge.template.js'
+					'src/github-badge.js': 'src/github-badge.template.js'
 				}
 			},
 			options : {
@@ -58,8 +58,8 @@ module.exports = function(grunt) {
 				banner: '<%= meta.banner %>'
 			},
 			dist: {
-				src: ['src/GitHubBadge.js'],
-				dest: 'dist/GitHubBadge.js'
+				src: ['src/github-badge.js'],
+				dest: 'dist/github-badge.js'
 			}
 		},
 
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
 		},
 
 		jasmine: {
-			src: 'src/GitHubBadge.js',
+			src: 'src/github-badge.js',
 			options: {
 				specs: 'spec/*spec.js',
 				helpers: 'spec/helpers/*.js',
@@ -87,7 +87,7 @@ module.exports = function(grunt) {
 		},
 
 		jshint: {
-			files: ['src/GitHubBadgejs'],
+			files: ['src/github-badge.js'],
 			options: {
 				jshintrc: ".jshintrc"
 			}
@@ -98,8 +98,8 @@ module.exports = function(grunt) {
 				banner: '<%= meta.banner %>'
 			},
 			my_target: {
-				src: ['dist/GitHubBadge.js'],
-				dest: 'dist/GitHubBadge.min.js'
+				src: ['dist/github-badge.js'],
+				dest: 'dist/github-badge.min.js'
 			}
 		},
 

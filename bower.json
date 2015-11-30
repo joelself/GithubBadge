@@ -1,13 +1,13 @@
 {
-	"name": "GitHubBadge",
+	"name": "github-badge",
 	"version": "0.5.1",
-	"homepage": "https://github.com/joelself/GithubBadge",
+	"homepage": "https://github.com/joelself/github-badge",
 	"authors": [
 		"Joel Self <joel@dislocal.com>",
 		"Zeno Rocha <hi@zenorocha.com>"
 	],
 	"description": "A jQuery widget to show-off your GitHub Repositories.",
-	"main": "src/GitHubBadge.js",
+	"main": "src/github-badge.js",
 	"keywords": [
 		"jquery",
 		"github",
