@@ -4,9 +4,9 @@
 [![Build Status](http://img.shields.io/travis/zenorocha/jquery-github/master.svg?style=flat)](https://travis-ci.org/zenorocha/jquery-github)
 [![DevDependencies Status](http://img.shields.io/david/dev/zenorocha/jquery-github.svg?style=flat)](https://david-dm.org/zenorocha/jquery-github#info=devDependencies)
 
-[![Github Repo Demonstration](https://cloud.githubusercontent.com/assets/398893/3528396/064b1fa4-078f-11e4-8460-2593d190c2fc.png)](http://zenorocha.github.io/jquery-github/)
+[![Github Repo Demonstration](https://raw.githubusercontent.com/joelself/github-badge/gh-pages/img/github-badge.png)](https://github.com/joelself/github-badge)
 
-> A jQuery plugin to display your Github Repositories.
+> A jQuery widget to show-off your Github Repositories.
 
 ## Browser Support
 
@@ -20,9 +20,9 @@ IE 8+ ✔ | Latest ✔ | Latest ✔ | Latest ✔ | Latest ✔ |
 
 Three quick start options are available:
 
-* [Download latest release](https://github.com/zenorocha/jquery-github/releases)
-* Clone the repo: `git@github.com:zenorocha/jquery-github.git`
-* Install with [Bower](http://bower.io): `bower install jquery-github`
+* [Download latest release](https://github.com/joelself/github-badge/releases)
+* Clone the repo: `git@github.com:joelself/github-badge.git`
+* Install with [Bower](http://bower.io): `bower install github-badge`
 
 ## Setup
 
@@ -42,18 +42,25 @@ Create an attribute called `data-repo`:
 <div data-repo="jquery-boilerplate/jquery-boilerplate"></div>
 ```
 
-Include jQuery:
+Include jQuery or Zepto:
 
 ```html
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+```
+Or
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.min.js"></script>
 ```
 
 Include plugin's CSS and JS:
 
 ```html
 <link rel="stylesheet" href="assets/base.css">
-<script src="jquery.github.min.js"></script>
+<script src="github-badge.min.js"></script>
 ```
+
+Make sure the font is in the same directory as the ```base.css``` (or change ```base.css``` to reference the correct directory:
+![Fonts in same directory as css](https://raw.githubusercontent.com/joelself/github-badge/gh-pages/img/font-dir.png)
 
 Call the plugin:
 
@@ -61,9 +68,15 @@ Call the plugin:
 $("[data-repo]").github();
 ```
 
-And that's it \o/
+Or call it with options
 
-[Check full example's source code](https://github.com/zenorocha/jquery-github/blob/master/demo/index.html).
+```javascript
+$("[data-repo]").github({iconStars: true, iconWatchers: true, iconForks: true, iconIssues: true});
+```
+
+And that's it.
+
+[Check full example's source code](https://github.com/joelself/github-badge/blob/master/demo/index.html).
 
 ## Options
 
@@ -71,7 +84,8 @@ Here's a list of available settings.
 
 ```javascript
 $("[data-repo]").github({
-	iconStars:  true,
+	iconStars:  false,
+	iconWatchers: true,
 	iconForks:  true,
 	iconIssues: false
 });
@@ -79,7 +93,8 @@ $("[data-repo]").github({
 
 Attribute			| Type				| Default		| Description
 ---						| ---					| ---				| ---
-`iconStars`		| *Boolean*		| `true`		| Displays the number of stars in a repository.
+`iconStars`		| *Boolean*		| `false`		| Displays the number of stars in a repository.
+`iconWatchers`| *Boolean*		| `true`		| Displays the number of watchers in a repository.
 `iconForks`		| *Boolean*		| `true`		| Displays the number of forks in a repository.
 `iconIssues`	| *Boolean*		| `false`		| Displays the number of issues in a repository.
 
@@ -94,21 +109,23 @@ The basic structure of the project is given in the following way:
 |   |-- index.html
 |   |-- index-zepto.html
 |-- dist/
-|   |-- jquery.boilerplate.js
-|   |-- jquery.boilerplate.min.js
+|   |-- github-badge.js
+|   |-- github-badge.min.js
 |-- src/
-|   |-- jquery.boilerplate.coffee
-|   |-- jquery.boilerplate.js
+|   |-- github-badge.js
+|   |-- github-badge.template.js
+|   |-- template.html
 |-- .editorconfig
 |-- .gitignore
 |-- .jshintrc
 |-- .travis.yml
-|-- github.jquery.json
+|-- bower.json
+|-- github-badge.json
 |-- Gruntfile.js
 `-- package.json
 ```
 
-#### [assets/](https://github.com/zenorocha/jquery-github/tree/master/assets)
+#### [assets/](https://github.com/joelself/github-badge/tree/master/assets)
 
 Contains CSS and Font files to create that lovely Github box.
 
@@ -116,55 +133,55 @@ Contains CSS and Font files to create that lovely Github box.
 
 Contains all dependencies like jQuery and Zepto.
 
-#### [demo/](https://github.com/zenorocha/jquery-github/tree/master/demo)
+#### [demo/](https://github.com/joelself/github-badgeb/tree/master/demo)
 
 Contains a simple HTML file to demonstrate the plugin.
 
-#### [dist/](https://github.com/zenorocha/jquery-github/tree/master/dist)
+#### [dist/](https://github.com/joelself/github-badge/tree/master/dist)
 
 This is where the generated files are stored once Grunt runs JSHint and other stuff.
 
-#### [src/](https://github.com/zenorocha/jquery-github/tree/master/src)
+#### [src/](https://github.com/joelself/github-badge/tree/master/src)
 
 Contains the files responsible for the plugin.
 
-#### [.editorconfig](https://github.com/zenorocha/jquery-github/tree/master/.editorconfig)
+#### [.editorconfig](https://github.com/joelself/github-badge/tree/master/.editorconfig)
 
 This file is for unifying the coding style for different editors and IDEs.
 
 > Check [editorconfig.org](http://editorconfig.org) if you haven't heard about this project yet.
 
-#### [.gitignore](https://github.com/zenorocha/jquery-github/tree/master/.gitignore)
+#### [.gitignore](https://github.com/joelself/github-badge/tree/master/.gitignore)
 
 List of files that we don't want Git to track.
 
 > Check this [Git Ignoring Files Guide](https://help.github.com/articles/ignoring-files) for more details.
 
-#### [.jshintrc](https://github.com/zenorocha/jquery-github/tree/master/.jshintrc)
+#### [.jshintrc](https://github.com/joelself/github-badge/tree/master/.jshintrc)
 
 List of rules used by JSHint to detect errors and potential problems in JavaScript.
 
 > Check [jshint.com](http://jshint.com/about/) if you haven't heard about this project yet.
 
-#### [.travis.yml](https://github.com/zenorocha/jquery-github/tree/master/.travis.yml)
+#### [.travis.yml](https://github.com/joelself/github-badge/tree/master/.travis.yml)
 
 Definitions for continous integration using Travis.
 
 > Check [travis-ci.org](http://about.travis-ci.org/) if you haven't heard about this project yet.
 
-#### [github.jquery.json](https://github.com/zenorocha/jquery-github/tree/master/github.jquery.json)
+#### [gihub-badge.json](https://github.com/joelself/github-badge/tree/master/github-badge.json)
 
 Package manifest file used to publish plugins in jQuery Plugin Registry.
 
 > Check this [Package Manifest Guide](http://plugins.jquery.com/docs/package-manifest/) for more details.
 
-#### [Gruntfile.js](https://github.com/zenorocha/jquery-github/tree/master/Gruntfile.js)
+#### [Gruntfile.js](https://github.com/joelself/github-badge/tree/master/Gruntfile.js)
 
 Contains all automated tasks using Grunt.
 
 > Check [gruntjs.com](http://gruntjs.com) if you haven't heard about this project yet.
 
-#### [package.json](https://github.com/zenorocha/jquery-github/tree/master/package.json)
+#### [package.json](https://github.com/joelself/github-badge/tree/master/package.json)
 
 Specify all dependencies loaded via Node.JS.
 
@@ -172,12 +189,11 @@ Specify all dependencies loaded via Node.JS.
 
 ## Showcase
 
-* [zenorocha.com/projects](http://zenorocha.com/projects/)
-* [anasnakawa.com/projects](http://anasnakawa.com/projects/)
+* [dislocal.com/personal-projects](http://dislocal.com/personal-projects/)
 
 **Have you used this plugin in your project?**
 
-Let me know! Send a [tweet](http://twitter.com/zenorocha) or [pull request](https://github.com/zenorocha/jquery-github/pull/new/master) and I'll add it here :)
+Let me know! Send a [tweet](http://twitter.com/joelself) or [pull request](https://github.com/joelself/github-badge/pull/new/master) and I'll add it here :)
 
 ## Alternatives
 
@@ -185,26 +201,22 @@ Let me know! Send a [tweet](http://twitter.com/zenorocha) or [pull request](http
 
 No problem, [@ricardobeat](https://github.com/ricardobeat) already did one. Check [his fork](https://github.com/ricardobeat/github-repos)!
 
-**Prefer Zepto instead of jQuery?**
-
-No problem, [@igorlima](https://github.com/igorlima) already did that. Check [demo/index-zepto.html](https://github.com/zenorocha/jquery-github/tree/master/demo/index-zepto.html).
-
 **Prefer AngularJS instead of jQuery?**
 
 No problem, [@lucasconstantino](https://github.com/lucasconstantino) already did that. Check [his fork](https://github.com/lucasconstantino/angular-github-repo)!
 
 ## Contributing
 
-Check [CONTRIBUTING.md](https://github.com/zenorocha/jquery-github/blob/master/CONTRIBUTING.md).
+Check [CONTRIBUTING.md](https://github.com/joelself/github-badge/blob/master/CONTRIBUTING.md).
 
 ## History
 
-Check [Releases](https://github.com/zenorocha/jquery-github/releases) for detailed changelog.
+Check [Releases](https://github.com/joelself/github-badge/releases) for detailed changelog.
 
 ## Credits
 
-Built on top of [jQuery Boilerplate](http://jqueryboilerplate.com).
+Based on [zenorocha/jquery-github](https://github.com/zenorocha/jquery-github) and [ricardobeat/github-repos](https://github.com/ricardobeat/github-repos)
 
 ## License
 
-[MIT License](http://zenorocha.mit-license.org/) © Zeno Rocha
+[MIT License](http://joelself.mit-license.org) © Joel Self
