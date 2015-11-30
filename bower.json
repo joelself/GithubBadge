@@ -18,5 +18,5 @@
 		"jquery": "^2.1.1",
 		"zepto": "^1.1.4"
 	},
-    "ignore": []
+	"ignore": []
 }
