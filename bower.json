@@ -1,15 +1,17 @@
 {
-	"name": "jquery-github",
+	"name": "GitHubBadge",
 	"version": "0.4.2",
-	"homepage": "https://github.com/zenorocha/jquery-github",
+	"homepage": "https://github.com/joelself/GithubBadge",
 	"authors": [
+		"Joel Self <joel@dislocal.com>",
 		"Zeno Rocha <hi@zenorocha.com>"
 	],
-	"description": "A jQuery plugin to display your Github Repositories.",
-	"main": "src/jquery.github.js",
+	"description": "A jQuery widget to show-off your GitHub Repositories.",
+	"main": "src/GitHubBadge.js",
 	"keywords": [
 		"jquery",
-		"github"
+		"github",
+		"widget"
 	],
 	"license": "MIT",
 	"dependencies": {

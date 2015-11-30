@@ -6,22 +6,22 @@ module.exports = function(grunt) {
 
 		meta: {
 			banner: '/*\n' +
-				' *  <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
-				' *  <%= pkg.description %>\n' +
-				' *  <%= pkg.homepage %>\n' +
+				' *	 <%= pkg.title || pkg.name %> - v<%= pkg.version %>\n' +
+				' *	 <%= pkg.description %>\n' +
+				' *	 <%= pkg.homepage %>\n' +
 				' *\n' +
-				' *  Copyright (c) <%= grunt.template.today("yyyy") %>\n' +
-				' *  MIT License\n' +
-        		' *  Forked from github.com/zenorocha/jquery-github-repos then github.com/ricardobeat/github-repos\n' +
+				' *	 Copyright (c) <%= grunt.template.today("yyyy") %>\n' +
+				' *	 MIT License\n' +
+				' *	 Forked from github.com/zenorocha/jquery-github-repos then github.com/ricardobeat/github-repos\n' +
 				' */\n'
 		},
 
 		bump: {
 			options: {
-				files: ['bower.json', 'github.jquery.json'],
+				files: ['bower.json', 'GitHubBadge.json'],
 				commit: true,
 				commitMessage: 'Release v%VERSION%',
-				commitFiles: ['bower.json', 'github.jquery.json', 'dist'],
+				commitFiles: ['bower.json', 'GitHubBadge.json', 'dist'],
 				createTag: true,
 				tagName: '%VERSION%',
 				tagMessage: '',
@@ -29,28 +29,37 @@ module.exports = function(grunt) {
 				pushTo: 'origin'
 			}
 		},
-     
-		replace: {
-     		dist: {
-           'src/jquery.github.js': 'src/jquery.github.template.js'
-         },
-        	options : {
-           replacements : [
-             {
-               pattern: '{{template}}',
-               replacement: '<%= grunt.file.read("src/template.html") %>'
-             }
-           ]
-         }
-      },
-     
+
+		config: {
+			src: 'src:/*.html',
+			dist: 'dist/'
+		},
+		'string-replace': {
+			inline: {
+				files: {
+					'src/GitHubBadge.js': 'src/GitHubBadge.template.js'
+				}
+			},
+			options : {
+				replacements : [
+					{
+						pattern: '{{template}}',
+						replacement: function(match, p1) {
+							var template = grunt.file.read('src/template.html');
+							return template.replace(/[\r\n]+/g, '\\n').replace(/"/g, '\\"');
+						}
+					}
+				]
+			}
+		},
+
 		concat: {
 			options: {
 				banner: '<%= meta.banner %>'
 			},
 			dist: {
-				src: ['src/jquery.github.js'],
-				dest: 'dist/jquery.github.js'
+				src: ['src/GitHubBadge.js'],
+				dest: 'dist/GitHubBadge.js'
 			}
 		},
 
@@ -69,16 +78,16 @@ module.exports = function(grunt) {
 		},
 
 		jasmine: {
-			src: 'src/jquery.github.js',
+			src: 'src/GitHubBadge.js',
 			options: {
 				specs: 'spec/*spec.js',
 				helpers: 'spec/helpers/*.js',
-				vendor: 'lib/jquery.min.js'
+				vendor: 'bower_components/jquery/dist/jquery.min.js'
 			}
 		},
 
 		jshint: {
-			files: ['src/jquery.github.js'],
+			files: ['src/GitHubBadgejs'],
 			options: {
 				jshintrc: ".jshintrc"
 			}
@@ -89,14 +98,14 @@ module.exports = function(grunt) {
 				banner: '<%= meta.banner %>'
 			},
 			my_target: {
-				src: ['dist/jquery.github.js'],
-				dest: 'dist/jquery.github.min.js'
+				src: ['dist/GitHubBadge.js'],
+				dest: 'dist/GitHubBadge.min.js'
 			}
 		},
 
 		watch: {
 			files: ['**/*'],
-			tasks: ['jshint', 'concat', 'uglify'],
+			tasks: ['jshint', 'string-replace', 'concat', 'uglify'],
 		}
 
 	});
@@ -108,9 +117,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-watch');
 	grunt.loadNpmTasks('grunt-lintspaces');
-  	grunt.loadNpmTasks('grunt-string-replace');
+	grunt.loadNpmTasks('grunt-string-replace');
 
-	grunt.registerTask('default', ['lintspaces', 'jshint', 'replace' 'concat', 'uglify']);
+	grunt.registerTask('default', ['string-replace', 'lintspaces', 'jshint', 'concat', 'uglify']);
 	grunt.registerTask('release', ['bump-only:patch', 'default', 'bump-commit']);
 	grunt.registerTask('test', ['lintspaces', 'jshint', 'jasmine']);
 

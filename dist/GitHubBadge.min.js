@@ -1,7 +1,7 @@
 /*
- *	 jquery-github - v0.4.1
- *	 A jQuery plugin to display your Github Repositories.
- *	 https://github.com/zenorocha/jquery-github
+ *	 GitHubBadge - v0.4.2
+ *	 A jQuery widget to show-off your GitHub Repositories.
+ *	 https://github.com/joelself/GithubBadge
  *
  *	 Copyright (c) 2015
  *	 MIT License

@@ -64,12 +64,12 @@ Github.prototype.init = function () {
 Github.prototype.displayIcons = function () {
 	var options = this.options,
 			$iconStars = $( ".repo-stars" ),
-			$iconStars = $( ".repo-watchers" ),
+			$iconWatchers = $( ".repo-watchers" ),
 			$iconForks = $( ".repo-forks" ),
 			$iconIssues = $( ".repo-issues" );
 
 	$iconStars.css( "display", options.iconStars ? "inline-block" : "none" );
-	$iconStars.css( "display", options.iconWatchers ? "inline-block" : "none" );
+	$iconWatchers.css( "display", options.iconWatchers ? "inline-block" : "none" );
 	$iconForks.css( "display", options.iconForks ? "inline-block" : "none" );
 	$iconIssues.css( "display", options.iconIssues ? "inline-block" : "none" );
 };
