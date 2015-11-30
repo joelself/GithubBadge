@@ -6,7 +6,7 @@
 
 [![Github Repo Demonstration](https://raw.githubusercontent.com/joelself/github-badge/gh-pages/img/github-badge.png)](https://github.com/joelself/github-badge)
 
-> A jQuery widget to show-off your Github Repositories.
+A jQuery widget to show-off your Github Repositories.
 
 ## Browser Support
 
