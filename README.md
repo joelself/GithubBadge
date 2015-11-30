@@ -1,4 +1,4 @@
-# jQuery Github
+# GitHub Badge
 
 [![Bower version](http://img.shields.io/bower/v/jquery-github.svg?style=flat)](http://bower.io/search/?q=jquery-github)
 [![Build Status](http://img.shields.io/travis/zenorocha/jquery-github/master.svg?style=flat)](https://travis-ci.org/zenorocha/jquery-github)
