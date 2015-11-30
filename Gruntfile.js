@@ -82,7 +82,7 @@ module.exports = function(grunt) {
 			options: {
 				specs: 'spec/*spec.js',
 				helpers: 'spec/helpers/*.js',
-				vendor: 'bower_components/jquery/dist/jquery.min.js'
+				vendor: 'demo/js/jquery-2.1.4.min.js'
 			}
 		},
 

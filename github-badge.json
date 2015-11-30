@@ -1,34 +1,36 @@
 {
-	"name": "github",
-	"title": "jQuery Github",
-	"description": "A jQuery plugin to display your Github Repositories.",
+	"name": "github-badge",
+	"title": "GitHub Badge",
+	"description": "A jQuery widget to show-off your GitHub Repositories.",
 	"keywords": [
 		"github",
 		"repositories",
-		"git"
+		"git",
+		"badge",
+		"widget"
 	],
 	"version": "0.5.2",
 	"author": {
-		"name": "Zeno Rocha",
-		"url": "https://github.com/zenorocha"
+		"name": "Joel Self",
+		"url": "https://github.com/joelself"
 	},
 	"maintainers": [
 		{
-			"name": "Zeno Rocha",
-			"email": "zno.rocha@gmail.com",
-			"url": "https://github.com/zenorocha"
+			"name": "Joel Self",
+			"email": "joel@dislocal.com",
+			"url": "https://github.com/joelself"
 		}
 	],
 	"licenses": [
 		{
 			"type": "MIT",
-			"url": "http://zenorocha.mit-license.org/"
+			"url": "http://joelself.mit-license.org/"
 		}
 	],
-	"bugs": "https://github.com/zenorocha/jquery-github/issues",
-	"homepage": "https://github.com/zenorocha/jquery-github/",
-	"docs": "https://github.com/zenorocha/jquery-github#readme",
-	"download": "https://github.com/zenorocha/jquery-github/archive/master.zip",
+	"bugs": "https://github.com/joelself/github-badge/issues",
+	"homepage": "https://github.com/joelself/github-badge/",
+	"docs": "https://github.com/joelself/github-badge#readme",
+	"download": "https://github.com/joelself/github-badge/archive/master.zip",
 	"dependencies": {
 		"jquery": ">=1.9"
 	}
