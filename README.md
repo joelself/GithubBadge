@@ -1,8 +1,8 @@
 # GitHub Badge
 
-[![Bower version](http://img.shields.io/bower/v/jquery-github.svg?style=flat)](http://bower.io/search/?q=jquery-github)
-[![Build Status](http://img.shields.io/travis/zenorocha/jquery-github/master.svg?style=flat)](https://travis-ci.org/zenorocha/jquery-github)
-[![DevDependencies Status](http://img.shields.io/david/dev/zenorocha/jquery-github.svg?style=flat)](https://david-dm.org/zenorocha/jquery-github#info=devDependencies)
+[![Bower version](http://img.shields.io/bower/v/github-badge.svg?style=flat)](http://bower.io/search/?q=github-badge)
+[![Build Status](https://img.shields.io/travis/joelself/github-badge/master.svg?style=flat)](https://travis-ci.org/joelself/github-badge)
+[![DevDependencies Status](http://img.shields.io/david/dev/joelself/github-badge.svg?style=flat)](https://david-dm.org/joelself/github-badge#info=devDependencies)
 
 [![Github Repo Demonstration](https://raw.githubusercontent.com/joelself/github-badge/gh-pages/img/github-badge.png)](https://github.com/joelself/github-badge)
 
