@@ -6,7 +6,7 @@
 
 [![Github Repo Demonstration](https://raw.githubusercontent.com/joelself/github-badge/gh-pages/img/github-badge.png)](https://github.com/joelself/github-badge)
 
-A jQuery widget to show-off your Github Repositories.
+A widget to show-off your Github Repositories.
 
 Takes the best of [ricardobeat/github-repos](https://github.com/ricardobeat/github-repos) and [zenorocha/jquery-github](https://github.com/zenorocha/jquery-github) and adds:
 
@@ -70,7 +70,11 @@ GHBadges.create("[data-repo]");
 Or call it with options
 
 ```javascript
-GHBadges.create("[data-repo]", {iconStars: true, iconWatchers: true, iconForks: true, iconIssues: true, dateFormat: "M/D/Y"});
+GHBadges.create("[data-repo]", {iconStars: true,
+		iconWatchers: true,
+		iconForks: true,
+		iconIssues: true,
+		dateFormat: "M/D/Y"});
 ```
 
 And that's it.
