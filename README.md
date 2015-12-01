@@ -6,7 +6,15 @@
 
 [![Github Repo Demonstration](https://raw.githubusercontent.com/joelself/github-badge/gh-pages/img/github-badge.png)](https://github.com/joelself/github-badge)
 
-A jQuery widget to show-off your Github Repositories.
+A widget to show-off your Github Repositories.
+
+Takes the best of [ricardobeat/github-repos](https://github.com/ricardobeat/github-repos) and [zenorocha/jquery-github](https://github.com/zenorocha/jquery-github) and adds:
+
+* Option to display the number of watchers
+* Official GitHub font for icons
+* Configurable date format
+
+NOW! No longer requires jQuery or Zepto!
 
 ## Browser Support
 
@@ -42,36 +50,31 @@ Create an attribute called `data-repo`:
 <div data-repo="jquery-boilerplate/jquery-boilerplate"></div>
 ```
 
-Include jQuery or Zepto:
-
-```html
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-```
-Or
-```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.1.6/zepto.min.js"></script>
-```
-
-Include plugin's CSS and JS:
+Include widget's CSS and JS:
 
 ```html
 <link rel="stylesheet" href="assets/base.css">
 <script src="github-badge.min.js"></script>
 ```
 
-Make sure the font is in the same directory as the ```base.css``` (or change ```base.css``` to reference the correct directory:
+Make sure the font is in the same directory as the ```base.css``` (or change ```base.css``` to reference the correct directory):
+
 ![Fonts in same directory as css](https://raw.githubusercontent.com/joelself/github-badge/gh-pages/img/font-dir.png)
 
 Call the plugin:
 
 ```javascript
-$("[data-repo]").github();
+GHBadges.create("[data-repo]");
 ```
 
 Or call it with options
 
 ```javascript
-$("[data-repo]").github({iconStars: true, iconWatchers: true, iconForks: true, iconIssues: true});
+GHBadges.create("[data-repo]", {iconStars: true,
+		iconWatchers: true,
+		iconForks: true,
+		iconIssues: true,
+		dateFormat: "M/D/Y"});
 ```
 
 And that's it.
@@ -83,11 +86,12 @@ And that's it.
 Here's a list of available settings.
 
 ```javascript
-$("[data-repo]").github({
+GHBadges.create("[data-repo]", {
 	iconStars:  false,
 	iconWatchers: true,
 	iconForks:  true,
-	iconIssues: false
+	iconIssues: false,
+	dateFormat: "D/M/Y"
 });
 ```
 
@@ -97,6 +101,7 @@ Attribute			| Type				| Default		| Description
 `iconWatchers`| *Boolean*		| `true`		| Displays the number of watchers in a repository.
 `iconForks`		| *Boolean*		| `true`		| Displays the number of forks in a repository.
 `iconIssues`	| *Boolean*		| `false`		| Displays the number of issues in a repository.
+`dateFormat`	| *String*		| `"D/M/Y"`		| Specifies what format the date should be display as.
 
 ## Structure
 
@@ -128,10 +133,6 @@ The basic structure of the project is given in the following way:
 #### [assets/](https://github.com/joelself/github-badge/tree/master/assets)
 
 Contains CSS and Font files to create that lovely Github box.
-
-#### bower_components/
-
-Contains all dependencies like jQuery and Zepto.
 
 #### [demo/](https://github.com/joelself/github-badgeb/tree/master/demo)
 
@@ -197,11 +198,7 @@ Let me know! Send a [tweet](http://twitter.com/joelself) or [pull request](https
 
 ## Alternatives
 
-**Prefer a non-jquery version with pure JavaScript?**
-
-No problem, [@ricardobeat](https://github.com/ricardobeat) already did one. Check [his fork](https://github.com/ricardobeat/github-repos)!
-
-**Prefer AngularJS instead of jQuery?**
+**Prefer AngularJS?**
 
 No problem, [@lucasconstantino](https://github.com/lucasconstantino) already did that. Check [his fork](https://github.com/lucasconstantino/angular-github-repo)!
 
