@@ -57,7 +57,7 @@ Include widget's CSS and JS:
 <script src="github-badge.min.js"></script>
 ```
 
-Make sure the font is in the same directory as the ```base.css``` (or change ```base.css``` to reference the correct directory:
+Make sure the font is in the same directory as the ```base.css``` (or change ```base.css``` to reference the correct directory):
 
 ![Fonts in same directory as css](https://raw.githubusercontent.com/joelself/github-badge/gh-pages/img/font-dir.png)
 
@@ -87,7 +87,7 @@ $("[data-repo]").github({
 	iconWatchers: true,
 	iconForks:  true,
 	iconIssues: false,
-        dateFormat: "D/M/Y"
+	dateFormat: "D/M/Y"
 });
 ```
 
