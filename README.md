@@ -86,7 +86,7 @@ And that's it.
 Here's a list of available settings.
 
 ```javascript
-$("[data-repo]").github({
+GHBadges.create("[data-repo]", {
 	iconStars:  false,
 	iconWatchers: true,
 	iconForks:  true,
