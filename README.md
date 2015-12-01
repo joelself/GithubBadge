@@ -14,7 +14,7 @@ Takes the best of [ricardobeat/github-repos](https://github.com/ricardobeat/gith
 * Official GitHub font for icons
 * Configurable date format
 
-NOW! No longer requires jQuery or Zepto!
+NOW, no longer requires jQuery or Zepto!
 
 ## Browser Support
 
@@ -71,10 +71,10 @@ Or call it with options
 
 ```javascript
 GHBadges.create("[data-repo]", {iconStars: true,
-		iconWatchers: true,
-		iconForks: true,
-		iconIssues: true,
-		dateFormat: "M/D/Y"});
+								iconWatchers: true,
+								iconForks: true,
+								iconIssues: true,
+								dateFormat: "M/D/Y"});
 ```
 
 And that's it.
