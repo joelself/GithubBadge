@@ -150,12 +150,11 @@
 	border: 1px solid #ddd;
 	border-bottom-color: #bbb;
 	border-radius: 3px;
-	display: block;
 	width: 24px;
 	padding: 0;
 	background: -webkit-linear-gradient(whiteSmoke, #E5E5E5);
 	background: -moz-linear-gradient(#f1f7fa, #dbeaf1);
-	filter:progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5',endColorstr='#e5e5e5')";
 	opacity: 1;
 }
 
@@ -172,8 +171,7 @@
 	text-indent: 0px;
 	content: attr(data-icon);
 	display: inline-block;
-	speak: none;
-	font-size: 1.3em;
+	font-size: 16px;
 	padding: 0 4px;
 }
 

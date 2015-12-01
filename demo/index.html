@@ -14,13 +14,13 @@
 </head>
 <body>
 
-	<a href="https://github.com/zenorocha/jquery-github">
+	<a href="https://github.com/joelself/github-badge">
 		<img class="github-ribbon" src="img/github-ribbon.png" alt="Fork me on GitHub">
 	</a>
 
 	<div class="title">
-		<h1>github-badge with jQuery</h1>
-		<p>A jQuery widget to display your favorite Github Repositories.<br>For more information, visit our <a href="https://github.com/joelself/github-badge">repository</a>.</p>
+		<h1>github-badge</h1>
+		<p>A javscript widget to display your favorite Github Repositories.<br>For more information, visit our <a href="https://github.com/joelself/github-badge">repository</a>.</p>
 	</div>
 
 
@@ -36,11 +36,10 @@
 
 	<img id="github-logo" src="img/github-cat.png" alt="Github Cat" />
 
-	<script src="js/jquery-2.1.4.min.js"></script>
 	<script src="../src/github-badge.js"></script>
 
 	<script>
-		$("[data-repo]").github({iconStars: true, iconWatchers: true, iconForks: true, iconIssues: true});
+		GHBadges.create("div[data-repo]", {iconStars: true, iconWatchers: true, iconForks: true, iconIssues: true, dateFormat: "M/D/Y"});
 	</script>
 
 </body>

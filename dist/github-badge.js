@@ -7,9 +7,50 @@
  *	 MIT License
  *	 Forked from github.com/zenorocha/jquery-github-repos then github.com/ricardobeat/github-repos
  */
-// -- Github Repository --------------------------------------------------------
+// -- ISO Date Polyfill --------------------------------------------------------
+(function(){
+	var D= new Date("2011-06-02T09:34:29+02:00");
+	if(!D || +D!== 1307000069000){
+		Date.fromISO= function(s){
+			var day, tz,
+			rx=/^(\d{4}\-\d\d\-\d\d([tT ][\d:\.]*)?)([zZ]|([+\-])(\d\d):(\d\d))?$/,
+			p= rx.exec(s) || [];
+			if(p[1]){
+				day= p[1].split(/\D/);
+				for(var i= 0, L= day.length; i<L; i++){
+					day[i]= parseInt(day[i], 10) || 0;
+				}
+				day[1]-= 1;
+				day= new Date(Date.UTC.apply(Date, day));
+				if(!day.getDate()) {
+					return NaN;
+				}
+				if(p[5]){
+					tz= (parseInt(p[5], 10)*60);
+					if(p[6]) {
+						tz+= parseInt(p[6], 10);
+					}
+					if(p[4] === "+") {
+						tz*= -1;
+					}
+					if(tz) {
+						day.setUTCMinutes(day.getUTCMinutes()+ tz);
+					}
+				}
+				return day;
+			}
+			return NaN;
+		};
+	}
+	else{
+		Date.fromISO= function(s){
+			return new Date(s);
+		};
+	}
+})();
 
-function GithubRepo( repo ) {
+// -- Github Repository --------------------------------------------------------
+function GithubRepo(repo) {
 	this.description = repo.description;
 	this.forks_count = repo.forks_count;
 	this.name = repo.name;
@@ -21,139 +62,179 @@ function GithubRepo( repo ) {
 }
 
 // Parses HTML template
-GithubRepo.prototype.toHTML = function () {
-	var data = this, template = "<div class='github-box'>\n	<div class='github-box-header'>\n		<h3>\n			<a href='{{html_url}}'>{{name}}</a>\n		</h3>\n		<div class='github-stats'>\n			<a class='repo-stars' title='Stars' data-icon='&#61482' href='{{html_url}}/stargazers'>{{stargazers_count}}</a>\n			<a class='repo-watchers' title='Watchers' data-icon='&#61518' href='{{html_url}}/watchers'>{{watchers_count}}</a>\n			<a class='repo-forks' title='Forks' data-icon='&#61442' href='{{html_url}}/network'>{{forks_count}}</a>\n			<a class='repo-issues' title='Issues' data-icon='&#61478' href='{{html_url}}/issues'>{{open_issues}}</a>\n		</div>\n	</div>\n	<div class='github-box-content'>\n		<p>{{description}} &mdash; <a href='{{html_url}}#readme'>Read More</a></p>\n	</div>\n	<div class='github-box-download'>\n		<p class='repo-update'>Latest commit to <strong>master</strong> on {{pushed_at}}</p>\n		<a class='repo-download' title='Download as zip' data-icon='&#61660' href='{{html_url}}/zipball/master'></a>\n	</div>\n</div>\n";
-	this.pushed_at = this._parsePushedDate( this.pushed_at );
-	return $( template.replace(/\{\{(\w+)\}\}/g, function(m, key){
+GithubRepo.prototype.toHTML = function (dateFormat) {
+	var data = this, template = "<div class='github-box-header'>\n	<h3>\n		<a href='{{html_url}}'>{{name}}</a>\n	</h3>\n	<div class='github-stats'>\n		<a class='repo-stars' title='Stars' data-icon='&#61482' href='{{html_url}}/stargazers'>{{stargazers_count}}</a>\n		<a class='repo-watchers' title='Watchers' data-icon='&#61518' href='{{html_url}}/watchers'>{{watchers_count}}</a>\n		<a class='repo-forks' title='Forks' data-icon='&#61442' href='{{html_url}}/network'>{{forks_count}}</a>\n		<a class='repo-issues' title='Issues' data-icon='&#61478' href='{{html_url}}/issues'>{{open_issues}}</a>\n	</div>\n</div>\n<div class='github-box-content'>\n	<p>{{description}} &mdash; <a href='{{html_url}}#readme'>Read More</a></p>\n</div>\n<div class='github-box-download'>\n	<p class='repo-update'>Latest commit to <strong>master</strong> on {{pushed_at}}</p>\n	<a class='repo-download' title='Download as zip' data-icon='&#61660' href='{{html_url}}/zipball/master'></a>\n</div>\n";
+	this.pushed_at = this._parsePushedDate(this.pushed_at, dateFormat);
+	return template.replace(/\{\{(\w+)\}\}/g, function(m, key){
 		return data[key];
-	} ) );
-};
-
-// Parses pushed_at with date format
-GithubRepo.prototype._parsePushedDate = function ( pushed_at ) {
-	var date = new Date( pushed_at );
-
-	return date.getDate() + "/" + ( date.getMonth() + 1 ) + "/" + date.getFullYear();
-};
-
-// -- Github Plugin ------------------------------------------------------------
-
-function Github( element, options ) {
-	var defaults = {
-				iconStars:  false,
-				iconWatchers:  true,
-				iconForks:  true,
-				iconIssues: false
-			};
-
-	this.element    = element;
-	this.$container = $( element );
-	this.repo       = this.$container.attr( "data-repo" );
-
-	this.options = $.extend( {}, defaults, options ) ;
-
-	this._defaults = defaults;
-
-	this.init();
-}
-
-// Initializer
-Github.prototype.init = function () {
-	var cached = this.getCache();
-
-	if ( cached !== null ) {
-		this.applyTemplate( JSON.parse( cached ) );
-		return;
-	}
-
-	this.requestData( this.repo );
-};
-
-// Display or hide icons
-Github.prototype.displayIcons = function () {
-	var options = this.options,
-			$iconStars = $( ".repo-stars" ),
-			$iconWatchers = $( ".repo-watchers" ),
-			$iconForks = $( ".repo-forks" ),
-			$iconIssues = $( ".repo-issues" );
-
-	$iconStars.css( "display", options.iconStars ? "inline-block" : "none" );
-	$iconWatchers.css( "display", options.iconWatchers ? "inline-block" : "none" );
-	$iconForks.css( "display", options.iconForks ? "inline-block" : "none" );
-	$iconIssues.css( "display", options.iconIssues ? "inline-block" : "none" );
-};
-
-// Request repositories from Github
-Github.prototype.requestData = function ( repo ) {
-	var that = this;
-
-	$.ajax({
-		url: "https://api.github.com/repos/" + repo,
-		dataType: "jsonp",
-		success: function( results ) {
-			var result_data = results.data,
-				isFailling = results.meta.status >= 400 && result_data.message;
-
-			if ( isFailling ) {
-				that.handleErrorRequest( result_data );
-				return;
-			}
-
-			that.handleSuccessfulRequest( result_data );
-		}
 	});
 };
 
-// Handle Errors requests
-Github.prototype.handleErrorRequest = function ( result_data ) {
-	console.warn( result_data.message );
-	return;
-};
-
-// Handle Successful request
-Github.prototype.handleSuccessfulRequest = function ( result_data ) {
-	this.applyTemplate( result_data );
-	this.setCache( result_data );
-};
-
-// Stores repostories in sessionStorage if available
-Github.prototype.setCache = function ( result_data ) {
-	// Cache data
-	if ( window.sessionStorage ) {
-		window.sessionStorage.setItem( "gh-repos:" + this.repo, JSON.stringify( result_data ) );
+// Parses pushed_at with date format
+GithubRepo.prototype._parsePushedDate = function (pushed_at, dateFormat) {
+	var date = new Date.fromISO(pushed_at), tokens = dateFormat.toUpperCase().split("/"), dateString = "", i;
+	for(i = 0; i < tokens.length; i++) {
+		switch(tokens[i]) {
+			case "D":
+				dateString += date.getDate();
+				break;
+			case "M":
+				dateString += date.getMonth() + 1;
+				break;
+			case "Y":
+				dateString += date.getFullYear();
+				break;
+		}
+		if(i < tokens.length - 1) {
+			dateString += "/";
+		}
 	}
+	return dateString;
 };
 
-// Grab cached results
-Github.prototype.getCache = function() {
-	if ( window.sessionStorage ) {
-		return window.sessionStorage.getItem( "gh-repos:" + this.repo );
-	}
-	else {
-		return false;
-	}
-};
-
-// Apply results to HTML template
-Github.prototype.applyTemplate = function ( repo ) {
-	var githubRepo = new GithubRepo( repo ),
-		$widget = githubRepo.toHTML();
-
-	$widget.appendTo( this.$container );
-
-	this.displayIcons();
-};
-
-// -- Attach plugin to jQuery's prototype --------------------------------------
-
-;( function ( $, window, undefined ) {
-
-	$.fn.github = function ( options ) {
-		return this.each(function () {
-			if ( !$( this ).data( "plugin_github" ) ) {
-				$( this ).data( "plugin_github", new Github( this, options ) );
+// -- Github Plugin ------------------------------------------------------------
+;(function(){
+	var cid = 0;                   // unique ID for jsonp callbacks
+	// Private function to generate a jsonp callback that deletes itself upon invocation
+	function JSONPCallback (context, cb) {
+		var name = "GHBadgeLoaded" + (++cid);
+		window[name] = function(data) {
+			cb.call(context, data);
+			window[name] = undefined;
+			try {
+				delete window[name];
+			} catch (e) {
 			}
-		});
+		};
+		return name;
+	}
+
+	function Github(element, options, dateFormat) {
+		var defaults = {
+					iconStars:  false,
+					iconWatchers:  true,
+					iconForks:  true,
+					iconIssues: false,
+					dateFormat: "M/D/Y"
+				};
+
+		this.element    = element;
+		this.repo       = element.getAttribute("data-repo");
+		this.callback   = JSONPCallback(this, this.handle);
+
+		this.options = this.simpleExtend(defaults, options);
+		this.init();
+	}
+
+	// Initializer
+	Github.prototype.init = function () {
+		var cached = this.getCache();
+
+		if (cached !== null && cached) {
+			this.applyTemplate(JSON.parse(cached));
+			return;
+		}
+
+		this.requestData(this.repo);
 	};
 
-}( window.jQuery || window.Zepto, window ) );
+	// Mimics jQuery's extend function see: http://stackoverflow.com/questions/11197247/javascript-equivalent-of-jquerys-extend-method
+	Github.prototype.simpleExtend = function(left, right) {
+		for(var key in right) {
+			if(right.hasOwnProperty(key)) {
+				left[key] = right[key];
+			}
+		}
+		return left;
+	};
+
+	// Display or hide icons
+	Github.prototype.displayIcons = function () {
+		var options = this.options,
+				iconStars = this.element.querySelectorAll(".repo-stars")[0],
+				iconWatchers = this.element.querySelectorAll(".repo-watchers")[0],
+				iconForks = this.element.querySelectorAll(".repo-forks")[0],
+				iconIssues = this.element.querySelectorAll(".repo-issues")[0];
+
+		iconStars.style.display = options.iconStars ? "inline-block" : "none";
+		iconWatchers.style.display = options.iconWatchers ? "inline-block" : "none";
+		iconForks.style.display = options.iconForks ? "inline-block" : "none";
+		iconIssues.style.display = options.iconIssues ? "inline-block" : "none";
+	};
+
+	// Request repositories from Github
+	Github.prototype.requestData = function (repo) {
+		var script = document.createElement("script");
+		script.async = true;
+		script.src = "https://api.github.com/repos/" + repo + "?callback=" + this.callback;
+		document.body.appendChild(script);
+	};
+
+	Github.prototype.handle = function(results) {
+		var result_data = results.data,	isFailing = results.meta.status >= 400 && result_data.message;
+
+		if (isFailing) {
+			this.handleErrorRequest(result_data);
+			return;
+		}
+
+		this.handleSuccessfulRequest(result_data);
+	};
+
+	// Handle Errors requests
+	Github.prototype.handleErrorRequest = function (result_data) {
+		console.warn(result_data.message);
+		return;
+	};
+
+	// Handle Successful request
+	Github.prototype.handleSuccessfulRequest = function (result_data) {
+		this.applyTemplate(result_data);
+		this.setCache(result_data);
+	};
+
+	// Stores repostories in sessionStorage if available
+	Github.prototype.setCache = function (result_data) {
+		// Cache data
+		if (window.sessionStorage) {
+			window.sessionStorage.setItem("GHBadges:" + this.repo, JSON.stringify(result_data));
+		}
+	};
+
+	// Grab cached results
+	Github.prototype.getCache = function() {
+		if (window.sessionStorage) {
+			return window.sessionStorage.getItem("GHBadges:" + this.repo);
+		}
+		else {
+			return false;
+		}
+	};
+
+	// Apply results to HTML template
+	Github.prototype.applyTemplate = function (repo) {
+		var githubRepo = new GithubRepo(repo), widget = githubRepo.toHTML(this.options.dateFormat), div = document.createElement("div");
+		div.className = "github-box";
+		div.innerHTML = widget;
+
+		this.element.parentNode.replaceChild(div, this.element);
+		this.element = div;
+		this.displayIcons();
+	};
+
+	var GHBadges = {
+		create: function (selector, options) {
+			var elements = document.querySelectorAll(selector), i, element;
+
+			for(i = 0; i < elements.length; i++) {
+				new Github(elements[i], options);
+			}
+		}
+	};
+
+	if (typeof exports !== "undefined"){
+		exports = GHBadges;
+	} else {
+		window.GHBadges = GHBadges;
+	}
+})();

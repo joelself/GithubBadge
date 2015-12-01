@@ -31,7 +31,5 @@
 	"homepage": "https://github.com/joelself/github-badge/",
 	"docs": "https://github.com/joelself/github-badge#readme",
 	"download": "https://github.com/joelself/github-badge/archive/master.zip",
-	"dependencies": {
-		"jquery": ">=1.9"
-	}
+	"dependencies": {}
 }

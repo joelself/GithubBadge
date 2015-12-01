@@ -11,12 +11,10 @@
 	"keywords": [
 		"jquery",
 		"github",
+		"badge",
 		"widget"
 	],
 	"license": "MIT",
-	"dependencies": {
-		"jquery": "^2.1.1",
-		"zepto": "^1.1.4"
-	},
+	"dependencies": {},
 	"ignore": []
 }
