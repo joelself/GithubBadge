@@ -1,9 +1,9 @@
 /*
- *	 github-badge - v0.5.3
+ *	 github-badge - v0.5.4
  *	 A jQuery widget to show-off your GitHub Repositories.
  *	 https://github.com/joelself/github-badge
  *
- *	 Copyright (c) 2015
+ *	 Copyright (c) 2016
  *	 MIT License
  *	 Forked from github.com/zenorocha/jquery-github-repos then github.com/ricardobeat/github-repos
  */
